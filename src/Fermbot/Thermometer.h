@@ -18,7 +18,7 @@ private:
    static bool initialized;
 
 public:
-   Thermometer();
+   Thermometer(DeviceAddress address);
    virtual ~Thermometer();
 
    bool isInError();
@@ -26,6 +26,9 @@ public:
 
 private:
    bool lastReadingError;
+
+   // Address of digital thermometer
+   DeviceAddress thermometerAddress;
 };
 
 #endif /* THERMOMETER_H_ */

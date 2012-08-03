@@ -11,15 +11,9 @@
 #define ONE_WIRE_BUS 3
 #define RESOLUTION 12
 
-// Setup a oneWire instance to communicate with any OneWire devices
+// Set up the One Wire singletons
 OneWire oneWire(ONE_WIRE_BUS);
-
-// Pass our oneWire reference to Dallas Temperature.
 DallasTemperature sensors(&oneWire);
-
-// Address of digital thermometer
-DeviceAddress thermometerAddress = { 0x28, 0xFA, 0x62, 0x14, 0x04, 0x00, 0x00,
-   0x99 };
 
 bool Thermometer::initialized = false;
 
@@ -27,13 +21,17 @@ void Thermometer::begin() {
    if (!initialized) {
       // Start up the library
       sensors.begin();
-      sensors.setResolution(thermometerAddress, RESOLUTION);
 
       initialized = true;
    }
 }
 
-Thermometer::Thermometer() {
+Thermometer::Thermometer(DeviceAddress address) {
+   begin();
+
+   memcpy(this->thermometerAddress, address, sizeof(DeviceAddress));
+   sensors.setResolution(this->thermometerAddress, RESOLUTION);
+
    this->lastReadingError = true;
 }
 
