@@ -1,6 +1,8 @@
 /*
  * Thermometer.h
  *
+ * A digital thermometer class for the Dallas DS18S20 thermometer
+ *
  *  Created on: Aug 2, 2012
  *      Author: dlouw
  */

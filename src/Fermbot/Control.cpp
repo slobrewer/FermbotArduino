@@ -1,6 +1,8 @@
 /*
  * Control.cpp
  *
+ * A control output used to trigger a power source of some sort.
+ *
  *  Created on: Aug 3, 2012
  *      Author: dlouw
  */
