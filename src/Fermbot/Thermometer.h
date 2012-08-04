@@ -1,7 +1,7 @@
 /*
  * Thermometer.h
  *
- *  Created on: Aug 1, 2012
+ *  Created on: Aug 2, 2012
  *      Author: dlouw
  */
 
@@ -9,6 +9,8 @@
 #define THERMOMETER_H_
 #include <OneWire.h>
 #include <DallasTemperature.h>
+
+namespace Fermbot {
 
 class Thermometer {
 public:
@@ -31,4 +33,5 @@ private:
    DeviceAddress thermometerAddress;
 };
 
+} /* namespace Fermbot */
 #endif /* THERMOMETER_H_ */

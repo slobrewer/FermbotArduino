@@ -1,11 +1,13 @@
 /*
  * Thermometer.cpp
  *
- *  Created on: Aug 1, 2012
+ *  Created on: Aug 2, 2012
  *      Author: dlouw
  */
 
 #include "Thermometer.h"
+
+namespace Fermbot {
 
 // Data wire is plugged into pin 3 on the Arduino
 #define ONE_WIRE_BUS 3
@@ -57,3 +59,5 @@ float Thermometer::readTemperatureF() {
 
    return DallasTemperature::toFahrenheit(tempC);
 }
+
+} /* namespace Fermbot */

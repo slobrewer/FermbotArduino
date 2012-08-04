@@ -1,19 +1,25 @@
-// Do not remove the include below
+/*
+ * Fermbot.h
+ *
+ *  Created on: Aug 2, 2012
+ *      Author: dlouw
+ */
+
 #include "Fermbot.h"
 #include "Thermometer.h"
+
+using namespace Fermbot;
 
 DeviceAddress thermometerAddress = { 0x28, 0xFA, 0x62, 0x14, 0x04, 0x00, 0x00,
    0x99 };
 Thermometer thermometer(thermometerAddress);
 
-//The setup function is called once at startup of the sketch
 void setup() {
    Serial.begin(9600);
 
    Serial.println("Initialization complete (build 001)");
 }
 
-// The loop function is called in an endless loop
 void loop() {
    float temperature = thermometer.readTemperatureF();
 
