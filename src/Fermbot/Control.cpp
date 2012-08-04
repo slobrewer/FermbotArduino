@@ -12,20 +12,30 @@
 namespace Fermbot {
 
 Control::Control(const uint8_t digitalPin)
-    : digitalPin(digitalPin) {
+    : requestedOn(false), poweredOn(false), digitalPin(digitalPin) {
   pinMode(this->digitalPin, OUTPUT);
 }
 
 Control::~Control() {
 }
 
-void Control::turnOn() {
-  this->enabled = true;
+void Control::requestOn() {
+  this->setRequestedOn(true);
+  this->powerOn();
+}
+
+void Control::requestOff() {
+  this->setRequestedOn(false);
+  this->powerOff();
+}
+
+void Control::powerOn() {
+  this->setPoweredOn(true);
   digitalWrite(this->digitalPin, HIGH);
 }
 
-void Control::turnOff() {
-  this->enabled = false;
+void Control::powerOff() {
+  this->setPoweredOn(false);
   digitalWrite(this->digitalPin, LOW);
 }
 

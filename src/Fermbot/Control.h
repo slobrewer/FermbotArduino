@@ -22,16 +22,36 @@ class Control {
     return digitalPin;
   }
 
-  void turnOn();
-  void turnOff();
-  inline bool isOn() const {
-    return enabled;
+  virtual void requestOn();
+  virtual void requestOff();
+
+  /* Has someone told us this control should be on? */
+  inline bool isRequestedOn() const {
+    return requestedOn;
+  }
+
+  /* Is the controlled output actually powered on? */
+  inline bool isPoweredOn() const {
+    return this->poweredOn;
+  }
+
+ protected:
+  virtual void powerOn();
+  virtual void powerOff();
+
+  inline void setPoweredOn(bool poweredOn) {
+    this->poweredOn = poweredOn;
+  }
+
+  inline void setRequestedOn(bool requestedOn) {
+    this->requestedOn = requestedOn;
   }
 
  private:
   const uint8_t digitalPin;
 
-  bool enabled;
+  bool poweredOn;
+  bool requestedOn;
 };
 
 } /* namespace Fermbot */
