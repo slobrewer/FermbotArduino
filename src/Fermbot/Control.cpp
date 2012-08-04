@@ -9,13 +9,22 @@
 
 namespace Fermbot {
 
-Control::Control() {
-   // TODO Auto-generated constructor stub
-
+Control::Control(const uint8_t digitalPin)
+    : digitalPin(digitalPin) {
+  pinMode(this->digitalPin, OUTPUT);
 }
 
 Control::~Control() {
-   // TODO Auto-generated destructor stub
+}
+
+void Control::turnOn() {
+  this->enabled = true;
+  digitalWrite(this->digitalPin, HIGH);
+}
+
+void Control::turnOff() {
+  this->enabled = false;
+  digitalWrite(this->digitalPin, LOW);
 }
 
 } /* namespace Fermbot */

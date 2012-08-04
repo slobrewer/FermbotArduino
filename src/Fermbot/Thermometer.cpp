@@ -28,7 +28,7 @@ void Thermometer::begin() {
    }
 }
 
-Thermometer::Thermometer(DeviceAddress address) {
+Thermometer::Thermometer(const DeviceAddress address) {
    begin();
 
    memcpy(this->thermometerAddress, address, sizeof(DeviceAddress));
@@ -40,7 +40,7 @@ Thermometer::Thermometer(DeviceAddress address) {
 Thermometer::~Thermometer() {
 }
 
-bool Thermometer::isInError() {
+bool Thermometer::isInError() const {
    return this->lastReadingError;
 }
 

@@ -15,7 +15,7 @@ extern "C" {
 void loop();
 void setup();
 #ifdef __cplusplus
-} // extern "C"
+}  // extern "C"
 #endif
 
 #endif /* Fermbot_H_ */

@@ -13,24 +13,24 @@
 namespace Fermbot {
 
 class Thermometer {
-public:
-   static void begin();
+ public:
+  static void begin();
 
-private:
-   static bool initialized;
+ private:
+  static bool initialized;
 
-public:
-   Thermometer(DeviceAddress address);
-   virtual ~Thermometer();
+ public:
+  Thermometer(const DeviceAddress address);
+  virtual ~Thermometer();
 
-   bool isInError();
-   float readTemperatureF();
+  bool isInError() const;
+  float readTemperatureF();
 
-private:
-   bool lastReadingError;
+ private:
+  bool lastReadingError;
 
-   // Address of digital thermometer
-   DeviceAddress thermometerAddress;
+  // Address of digital thermometer
+  DeviceAddress thermometerAddress;
 };
 
 } /* namespace Fermbot */
