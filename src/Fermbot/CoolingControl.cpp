@@ -14,6 +14,8 @@
 
 namespace Fermbot {
 
+CoolingControl *CoolingControl::shortCycledController = NULL;
+
 CoolingControl::CoolingControl(const uint8_t digitalPin)
     : Control(digitalPin),
       inShortCycle(false) {
@@ -31,7 +33,7 @@ void CoolingControl::powerOn() {
 
 void CoolingControl::setShortCycleFuse() {
   this->setInShortCycle(true);
-  CoolingControl::shortCycledController = this;
+  this->shortCycledController = this;
 
   MsTimer2::set(SHORT_CYCLE_LENGTH_MS, expireShortCycle);
   MsTimer2::start();

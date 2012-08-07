@@ -48,10 +48,9 @@ class Control {
   }
 
  private:
-  const uint8_t digitalPin;
-
-  bool poweredOn;
   bool requestedOn;
+  bool poweredOn;
+  const uint8_t digitalPin;
 };
 
 } /* namespace Fermbot */

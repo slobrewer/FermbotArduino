@@ -11,8 +11,8 @@
 #ifndef TEMPCONTROLLER_H_
 #define TEMPCONTROLLER_H_
 
-#include "CoolingControl.h"
 #include "Thermometer.h"
+#include "CoolingControl.h"
 
 namespace Fermbot {
 
