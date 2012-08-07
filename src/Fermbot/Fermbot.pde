@@ -6,13 +6,11 @@
  */
 
 #include "Fermbot.h"
-#include "Thermometer.h"
+#include "TempController.h"
 
 using namespace Fermbot;
 
-DeviceAddress thermometerAddress = { 0x28, 0xFA, 0x62, 0x14, 0x04, 0x00, 0x00,
-    0x99 };
-Thermometer thermometer(thermometerAddress);
+TempController tempController;
 
 void setup() {
   Serial.begin(9600);
@@ -21,9 +19,9 @@ void setup() {
 }
 
 void loop() {
-  float temperature = thermometer.readTemperatureF();
+  float temperature = tempController.readFermentationTempF();
 
-  if (temperature == -127.00) {
+  if (tempController.isFermentationTempError()) {
     Serial.println("Error reading temperature");
   } else {
     Serial.print("The current temperature is: ");

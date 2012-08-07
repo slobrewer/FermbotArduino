@@ -15,6 +15,9 @@
 namespace Fermbot {
 
 class CoolingControl : public Fermbot::Control {
+ private:
+  static CoolingControl *shortCycledController;
+
  public:
   CoolingControl(const uint8_t digitalPin);
   virtual ~CoolingControl();
@@ -35,7 +38,6 @@ class CoolingControl : public Fermbot::Control {
   inline void forcePowerOn() {
     Control::powerOn();
   }
-  static CoolingControl *shortCycledController;
   void setShortCycleFuse();
   static void expireShortCycle();
 };
