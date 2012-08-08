@@ -21,16 +21,15 @@ class TempController {
   TempController();
   virtual ~TempController();
 
-  float readFermentationTempF();
-  bool isFermentationTempError() const;
-
+  float readFermTempF();
+  bool isFermTempError() const;
 
   float getTargetTemp() const {
-     return targetTemp;
+    return targetTemp;
   }
 
   void setTargetTemp(float targetTemp) {
-     this->targetTemp = targetTemp;
+    this->targetTemp = targetTemp;
   }
 
   void processTempControl();
@@ -38,10 +37,41 @@ class TempController {
   void requestEnableCoolingControl(bool enabled);
   bool getCoolingControlRequested() const;
 
+  bool isLastCoolingPoweredOn() const {
+    return lastCoolingPoweredOn;
+  }
+
+  bool isLastCoolingRequested() const {
+    return lastCoolingRequested;
+  }
+
+  String getLastDecision() const {
+    return lastDecision;
+  }
+
+  float getLastFermTemp() const {
+    return lastFermTemp;
+  }
+
+  bool isLastFermTempIsInError() const {
+    return lastFermTempIsInError;
+  }
+
+  float getLastTargetTemp() const {
+    return lastTargetTemp;
+  }
+
  private:
   Thermometer fermentationThermometer;
   CoolingControl coolingControl;
   float targetTemp;
+
+  bool lastFermTempIsInError;
+  float lastFermTemp;
+  float lastTargetTemp;
+  String lastDecision;
+  bool lastCoolingRequested;
+  bool lastCoolingPoweredOn;
 };
 
 } /* namespace Fermbot */

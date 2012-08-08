@@ -27,45 +27,44 @@ TempController::TempController()
 TempController::~TempController() {
 }
 
-float TempController::readFermentationTempF() {
+float TempController::readFermTempF() {
   return fermentationThermometer.readTemperatureF();
 }
 
-bool TempController::isFermentationTempError() const {
+bool TempController::isFermTempError() const {
   return fermentationThermometer.isInError();
 }
 
 void TempController::processTempControl() {
-   float tempF = this->readFermentationTempF();
+  lastFermTemp = this->fermentationThermometer.readTemperatureF();
+  this->lastFermTempIsInError = this->fermentationThermometer.isInError();
+  this->lastTargetTemp = this->targetTemp;
 
-   if (this->fermentationThermometer.isInError()) {
-      Serial.println("Error reading temperature.");
-      return;
-   }
+  if (this->lastFermTempIsInError) {
+    lastDecision = "Error reading temperature.";
+    return;
+  }
 
-   Serial.println("Processing Temp Control");
-   Serial.print("Current Temperature: ");
-   Serial.println(tempF);
-   Serial.print("Target Temperature: ");
-   Serial.println(this->targetTemp);
+  if (abs(this->lastFermTemp - this->targetTemp) < DEADBAND_RADIUS) {
+    this->lastDecision = "Temperature within deadband. Cooling unchanged.";
+  } else if (this->lastFermTemp < this->targetTemp) {
+    this->lastDecision = "Temperature below target. Cooling disabled.";
+    this->coolingControl.requestOff();
+  } else {
+    this->lastDecision = "Temperature above target. Cooling enabled.";
+    this->coolingControl.requestOn();
+  }
 
-   if (abs(tempF - this->targetTemp) < DEADBAND_RADIUS) {
-      Serial.println("Temperature within deadband. Cooling unchanged.");
-   } else if (tempF < this->targetTemp) {
-      Serial.println("Temperature below target. Cooling disabled.");
-      this->coolingControl.requestOff();
-   } else {
-      Serial.println("Temperature above target. Cooling enabled.");
-      this->coolingControl.requestOn();
-   }
+  lastCoolingRequested = this->coolingControl.isRequestedOn();
+  lastCoolingPoweredOn = this->coolingControl.isPoweredOn();
 }
 
 void TempController::requestEnableCoolingControl(bool enabled) {
-   this->coolingControl.requestOn();
+  this->coolingControl.requestOn();
 }
 
 bool TempController::getCoolingControlRequested() const {
-   return this->coolingControl.isPoweredOn();
+  return this->coolingControl.isPoweredOn();
 }
 
 } /* namespace Fermbot */
