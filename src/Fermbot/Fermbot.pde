@@ -10,6 +10,9 @@
 
 using namespace Fermbot;
 
+#define CYCLE_TIME 1000 * 60
+#define TARGET_TEMP 68.0f
+
 TempController tempController;
 char decisionBuffer[64];
 
@@ -18,7 +21,7 @@ void setup() {
 
   Serial.println("Initialization complete (build 002)");
 
-  tempController.setTargetTemp(75.0f);
+  tempController.setTargetTemp(TARGET_TEMP);
 
   Serial.print("Target Temp,Error,Ferm Temp,Decision,Cooling Requested,");
   Serial.println("Cooling Powered On");
@@ -44,5 +47,5 @@ void loop() {
   tempController.processTempControl();
   logController();
 
-  delay(2000);
+  delay(CYCLE_TIME);
 }
