@@ -13,6 +13,7 @@
 
 #include "Thermometer.h"
 #include "CoolingControl.h"
+#include "HeatingControl.h"
 
 namespace Fermbot {
 
@@ -37,12 +38,23 @@ class TempController {
   void requestEnableCoolingControl(bool enabled);
   bool getCoolingControlRequested() const;
 
+  void requestEnableHeatingControl(bool enabled);
+  bool getHeatingControlRequested() const;
+
   bool isLastCoolingPoweredOn() const {
     return lastCoolingPoweredOn;
   }
 
   bool isLastCoolingRequested() const {
     return lastCoolingRequested;
+  }
+
+  bool isLastHeatingPoweredOn() const {
+    return lastHeatingPoweredOn;
+  }
+
+  bool isLastHeatingRequested() const {
+    return lastHeatingRequested;
   }
 
   String getLastDecision() const {
@@ -64,6 +76,7 @@ class TempController {
  private:
   Thermometer fermentationThermometer;
   CoolingControl coolingControl;
+  HeatingControl heatingControl;
   float targetTemp;
 
   bool lastFermTempIsInError;
@@ -72,6 +85,8 @@ class TempController {
   String lastDecision;
   bool lastCoolingRequested;
   bool lastCoolingPoweredOn;
+  bool lastHeatingRequested;
+  bool lastHeatingPoweredOn;
 };
 
 } /* namespace Fermbot */

@@ -11,7 +11,7 @@
 using namespace Fermbot;
 
 #define CYCLE_TIME 1000ul * 60ul
-#define TARGET_TEMP 68.0f
+#define TARGET_TEMP 75.0f
 
 TempController tempController;
 char decisionBuffer[64];
@@ -19,12 +19,12 @@ char decisionBuffer[64];
 void setup() {
   Serial.begin(9600);
 
-  Serial.println("Initialization complete (build 002)");
+  Serial.println("Initialization complete (build 005)");
 
   tempController.setTargetTemp(TARGET_TEMP);
 
   Serial.print("Target Temp,Error,Ferm Temp,Decision,Cooling Requested,");
-  Serial.println("Cooling Powered On");
+  Serial.println("Cooling Powered On,Heating Requested, Heating Powered On");
 }
 
 void logController() {
@@ -40,7 +40,11 @@ void logController() {
   Serial.print(",");
   Serial.print(tempController.isLastCoolingRequested());
   Serial.print(",");
-  Serial.println(tempController.isLastCoolingPoweredOn());
+  Serial.print(tempController.isLastCoolingPoweredOn());
+  Serial.print(",");
+  Serial.print(tempController.isLastHeatingRequested());
+  Serial.print(",");
+  Serial.println(tempController.isLastHeatingPoweredOn());
 }
 
 void loop() {
