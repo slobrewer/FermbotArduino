@@ -10,7 +10,7 @@
 
 using namespace Fermbot;
 
-#define CYCLE_TIME 1000 * 60
+#define CYCLE_TIME 1000ul * 60ul
 #define TARGET_TEMP 68.0f
 
 TempController tempController;
