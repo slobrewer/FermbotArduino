@@ -11,49 +11,55 @@
 
 using namespace Fermbot;
 
-#define CYCLE_TIME 1000ul * 60ul
+#define CYCLE_TIME 1000ul * 10ul
 #define TARGET_TEMP 75.0f
+const char *DATA_SEPARATOR = ",";
 
 TempController tempController;
-char decisionBuffer[64];
 SDLogger logger;
 
 void setup() {
-  Serial.begin(9600);
+   const char *HEADER =
+      "Target Temp,Error,Ferm Temp,Decision,Cooling Requested,Cooling Powered On,Heating Requested,Heating Powered On";
 
-  logger.begin();
+   Serial.begin(9600);
 
-  Serial.println("Initialization complete (build 011)");
+   logger.begin();
+   logger.openNewLogFile();
 
-  tempController.setTargetTemp(TARGET_TEMP);
+   Serial.println("Initialization complete (build 016)");
 
-  Serial.print("Target Temp,Error,Ferm Temp,Decision,Cooling Requested,");
-  Serial.println("Cooling Powered On,Heating Requested, Heating Powered On");
+   tempController.setTargetTemp(TARGET_TEMP);
+
+   logger.logln(HEADER);
 }
 
 void logController() {
-  Serial.print((double)tempController.getLastTargetTemp());
-  Serial.print(",");
-  Serial.print((int)tempController.isLastFermTempIsInError());
-  Serial.print(",");
-  Serial.print((double)tempController.getLastFermTemp());
-  Serial.print(",");
-  tempController.getLastDecision().toCharArray(decisionBuffer,
-                                            sizeof(decisionBuffer));
-  Serial.print(decisionBuffer);
-  Serial.print(",");
-  Serial.print(tempController.isLastCoolingRequested());
-  Serial.print(",");
-  Serial.print(tempController.isLastCoolingPoweredOn());
-  Serial.print(",");
-  Serial.print(tempController.isLastHeatingRequested());
-  Serial.print(",");
-  Serial.println(tempController.isLastHeatingPoweredOn());
+   char decisionBuffer[64];
+
+   tempController.getLastDecision().toCharArray(decisionBuffer,
+      sizeof(decisionBuffer));
+
+   logger.log((double) tempController.getLastTargetTemp());
+   logger.log(DATA_SEPARATOR);
+   logger.log((int) tempController.isLastFermTempIsInError());
+   logger.log(DATA_SEPARATOR);
+   logger.log((double) tempController.getLastFermTemp());
+   logger.log(DATA_SEPARATOR);
+   logger.log(decisionBuffer);
+   logger.log(DATA_SEPARATOR);
+   logger.log(tempController.isLastCoolingRequested());
+   logger.log(DATA_SEPARATOR);
+   logger.log(tempController.isLastCoolingPoweredOn());
+   logger.log(DATA_SEPARATOR);
+   logger.log(tempController.isLastHeatingRequested());
+   logger.log(DATA_SEPARATOR);
+   logger.logln(tempController.isLastHeatingPoweredOn());
 }
 
 void loop() {
-  tempController.processTempControl();
-  logController();
+   tempController.processTempControl();
+   logController();
 
-  delay(CYCLE_TIME);
+   delay(CYCLE_TIME);
 }

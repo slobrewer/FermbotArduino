@@ -17,9 +17,16 @@ public:
    virtual ~SDLogger();
 
    void begin();
+   void openNewLogFile();
+   File getOpenFile() {return logFile;}
+   void log(const char* logMessage);
+   void logln(const char* logMessage);
+   void log(const double logDouble);
+   void logln(const double logDouble);
 
 private:
    boolean sdCardInitialized;
+   File logFile;
 };
 
 } /* namespace Fermbot */
