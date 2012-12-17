@@ -7,6 +7,7 @@
 
 #include "Fermbot.h"
 #include "TempController.h"
+#include "SDLogger.h"
 
 using namespace Fermbot;
 
@@ -15,11 +16,14 @@ using namespace Fermbot;
 
 TempController tempController;
 char decisionBuffer[64];
+SDLogger logger;
 
 void setup() {
   Serial.begin(9600);
 
-  Serial.println("Initialization complete (build 005)");
+  logger.begin();
+
+  Serial.println("Initialization complete (build 011)");
 
   tempController.setTargetTemp(TARGET_TEMP);
 

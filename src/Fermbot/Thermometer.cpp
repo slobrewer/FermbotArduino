@@ -53,7 +53,7 @@ float Thermometer::readTemperatureF() {
    sensors.requestTemperatures();
 
    tempC = sensors.getTempC(thermometerAddress);
-   if (tempC == (float)DEVICE_DISCONNECTED) {
+   if (tempC == (float)DEVICE_DISCONNECTED || sensors.getDeviceCount() == 0) {
       this->lastReadingError = true;
    } else {
       this->lastReadingError = false;

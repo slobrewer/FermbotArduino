@@ -23,7 +23,10 @@ TempController::TempController()
     : fermentationThermometer(THERMOMETER_ADDRESS),
       coolingControl(COOLING_CONTROL_PIN),
       heatingControl(HEATING_CONTROL_PIN),
-      targetTemp(DEFAULT_FERM_TEMP) {
+      targetTemp(DEFAULT_FERM_TEMP), lastFermTempIsInError(false),
+      lastFermTemp(0), lastTargetTemp(0), lastDecision(NULL),
+      lastCoolingRequested(false), lastCoolingPoweredOn(false),
+      lastHeatingRequested(false), lastHeatingPoweredOn(false) {
 }
 
 TempController::~TempController() {
